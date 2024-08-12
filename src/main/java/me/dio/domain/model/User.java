@@ -1,16 +1,30 @@
 package me.dio.domain.model;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
 
+import java.util.List;
+
+@Entity(name = "tb_user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private me.dio.domain.model.Account account;
-    private ArrayList<me.dio.domain.model.Feature> features;
-    private me.dio.domain.model.Card card;
-    private ArrayList<me.dio.domain.model.News> news;
 
-    public User(long id, String name, me.dio.domain.model.Account account, ArrayList<me.dio.domain.model.Feature> features, me.dio.domain.model.Card card, ArrayList<me.dio.domain.model.News> news) {
+    private String name;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Account account;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Feature> features;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Card card;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<News> news;
+
+    public User(long id, String name, Account account, List<Feature> features, Card card, List<News> news) {
         this.id = id;
         this.name = name;
         this.account = account;
@@ -35,35 +49,35 @@ public class User {
         this.name = name;
     }
 
-    public me.dio.domain.model.Account getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(me.dio.domain.model.Account account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 
-    public ArrayList<me.dio.domain.model.Feature> getFeatures() {
+    public List<Feature> getFeatures() {
         return features;
     }
 
-    public void setFeatures(ArrayList<me.dio.domain.model.Feature> features) {
+    public void setFeatures(List<Feature> features) {
         this.features = features;
     }
 
-    public me.dio.domain.model.Card getCard() {
+    public Card getCard() {
         return card;
     }
 
-    public void setCard(me.dio.domain.model.Card card) {
+    public void setCard(Card card) {
         this.card = card;
     }
 
-    public ArrayList<me.dio.domain.model.News> getNews() {
+    public List<News> getNews() {
         return news;
     }
 
-    public void setNews(ArrayList<me.dio.domain.model.News> news) {
+    public void setNews(List<News> news) {
         this.news = news;
     }
 }
